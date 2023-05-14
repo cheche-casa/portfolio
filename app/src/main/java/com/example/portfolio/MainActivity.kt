@@ -4,6 +4,7 @@ import android.media.Image
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -16,6 +17,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -32,6 +34,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -103,15 +106,26 @@ fun PintaPantalla(modifier: Modifier = Modifier) {
             horizontalAlignment = Alignment.CenterHorizontally
         )
         {
-            Image(
-                modifier = Modifier
-                    .size(500.dp)
-                    .padding(vertical = 10.dp, horizontal = 10.dp),
-                painter = imaxes[indice],
-                contentDescription = null,
-                contentScale = ContentScale.Fit
-            )
-            PintaLiterales(indice = indice)
+            Surface( modifier = Modifier.padding(start = 20.dp, end = 20.dp, top = 20.dp),
+                shadowElevation = 20.dp,
+                border = BorderStroke(3.dp, Color.Gray),
+            ){
+                Image(
+                    modifier = Modifier
+                        .size(500.dp)
+                        .padding(vertical = 15.dp, horizontal = 15.dp),
+                    painter = imaxes[indice],
+                    contentDescription = null,
+                    contentScale = ContentScale.Fit
+                )
+            }
+            Surface(Modifier.padding(start = 20.dp, end = 20.dp, top = 30.dp),
+                shadowElevation = 20.dp,
+                border = BorderStroke(1.dp, Color.Black),
+            ){
+                PintaLiterales(indice = indice)
+            }
+            Spacer(Modifier.height(90.dp))
             PintaBotones(indice = indice,
                 onClickA = {
                     if ( indice == 0) {
@@ -134,12 +148,13 @@ fun PintaPantalla(modifier: Modifier = Modifier) {
 
 @Composable
 fun PintaLiterales(indice: Int, modifier: Modifier = Modifier){
-    Column(
+    Column(Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ){
         Text(modifier = modifier.padding(vertical = 1.dp, horizontal = 1.dp),
             text = nomes[indice],
-            fontSize = 18.sp,
+            fontSize = 25.sp,
+            fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center
         )
         Text(modifier = modifier.padding(vertical = 11.dp, horizontal = 1.dp),
@@ -152,12 +167,17 @@ fun PintaLiterales(indice: Int, modifier: Modifier = Modifier){
 
 @Composable
 fun PintaBotones(indice: Int, onClickA: () -> Unit, onClickS: () -> Unit, modifier: Modifier = Modifier) {
-    Row(modifier = modifier,
+    Row(Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.Center
     ){
-        Button(onClick = onClickA) {
+        Button(modifier = modifier.padding(horizontal = 20.dp),
+            shape = CutCornerShape(5),
+            onClick = onClickA) {
             Text("Anterior", fontSize = 18.sp)
         }
-        Button(onClick = onClickS) {
+        Button(modifier = modifier.padding(horizontal = 20.dp),
+            shape = CutCornerShape(5),
+            onClick = onClickS) {
             Text("Seguinte", fontSize = 18.sp)
         }
     }
