@@ -7,6 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -101,7 +102,7 @@ fun PintaPantalla(modifier: Modifier = Modifier) {
     var estado by remember { mutableStateOf(0) }
     var indice by remember { mutableStateOf(0) }
 
-//    if (estado == 0) {
+    if (estado == 0) {
         Column(modifier = modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         )
@@ -113,7 +114,8 @@ fun PintaPantalla(modifier: Modifier = Modifier) {
                 Image(
                     modifier = Modifier
                         .size(500.dp)
-                        .padding(vertical = 15.dp, horizontal = 15.dp),
+                        .padding(vertical = 15.dp, horizontal = 15.dp)
+                        .clickable( enabled = true, onClick = { estado = 1 } ),
                     painter = imaxes[indice],
                     contentDescription = null,
                     contentScale = ContentScale.Fit
@@ -125,30 +127,43 @@ fun PintaPantalla(modifier: Modifier = Modifier) {
             ){
                 PintaLiterales(indice = indice)
             }
-            Spacer(Modifier.height(90.dp))
-            PintaBotones(indice = indice,
-                onClickA = {
-                    if ( indice == 0) {
-                        indice = 3
+            Box(modifier = modifier.fillMaxSize(),
+                contentAlignment = Alignment.BottomEnd) {
+                PintaBotones(indice = indice,
+                    onClickA = {
+                        if (indice == 0) {
+                            indice = 3
+                        } else {
+                            indice--
+                        }
+                    },
+                    onClickS = {
+                        indice++
+                        if (indice == 4) {
+                            indice = 0
+                        }
                     }
-                    else{
-                        indice--
-                    }
-                },
-                onClickS = {
-                    indice++
-                    if ( indice == 4) {
-                        indice = 0
-                    }
-                }
+                )
+            }
+        }
+    }
+    else {
+        Surface( modifier = Modifier,
+        ){
+            Image(
+                modifier = Modifier.clickable( enabled = true, onClick = { estado = 0 } ),
+                painter = imaxes[indice],
+                contentDescription = null,
+                contentScale = ContentScale.Fit
             )
         }
     }
-//}
+}
 
 @Composable
 fun PintaLiterales(indice: Int, modifier: Modifier = Modifier){
-    Column(Modifier.fillMaxWidth(),
+    Column(modifier = modifier
+        .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ){
         Text(modifier = modifier.padding(vertical = 1.dp, horizontal = 1.dp),
@@ -167,7 +182,9 @@ fun PintaLiterales(indice: Int, modifier: Modifier = Modifier){
 
 @Composable
 fun PintaBotones(indice: Int, onClickA: () -> Unit, onClickS: () -> Unit, modifier: Modifier = Modifier) {
-    Row(Modifier.fillMaxWidth(),
+    Row(Modifier
+        .fillMaxWidth()
+        .padding(bottom = 25.dp),
         horizontalArrangement = Arrangement.Center
     ){
         Button(modifier = modifier.padding(horizontal = 20.dp),
@@ -185,7 +202,7 @@ fun PintaBotones(indice: Int, onClickA: () -> Unit, onClickS: () -> Unit, modifi
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
+fun DefaultPreview() {
     PortfolioTheme {
         PortfolioApp()
     }
