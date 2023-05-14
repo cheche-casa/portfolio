@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">portfolio</string>
+    <string name="nome_1">Mundo Liquido</string>
+    <string name="nome_2">Mirando a Cidade</string>
+    <string name="nome_3">Cidades Invisibles</string>
+    <string name="nome_4">Vínculos de Compostela</string>
+    <string name="data_1">2016</string>
+    <string name="data_2">2017</string>
+    <string name="data_3">2019</string>
+    <string name="data_4">2020</string>
+
+</resources>
